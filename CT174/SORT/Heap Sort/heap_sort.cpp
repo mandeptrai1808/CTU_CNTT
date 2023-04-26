@@ -32,22 +32,22 @@ void Swap(recordtype *a, recordtype *b){
 	*a = temp;
 }
 
-void Push_Down(recordtype a[], int first, int last){
+void push_down(recordtype a[], int first, int last){
 	int r = first;
 	while(r <= (last-1)/2){
-		if(last == (2*r+1)){
-			if(a[r].key > a[last].key)  Swap(&a[r], &a[last]);
+		if(last = r*2+1){
+			if(a[r].key > a[last].key) Swap(&a[r], &a[last]);
 			r = last;
 		}
 		else
-		if (a[r].key > a[r*2+1].key && a[r*2+1].key <= a[r*2+2].key){
+		if (a[r].key > a[r*2+1].key && a[r*2+1].key < a[r*2+2].key){
 			Swap(&a[r], &a[r*2+1]);
 			r = r*2+1;
 		}
 		else
-		if (a[r].key > a[r*2+2].key && a[r*2+1].key > a[r*2+2].key){
-			Swap(&a[r], &a[r*2+2]);
-			r = r*2+2;
+		if (a[r].key > a[r*2+2].key && a[r*2+2].key <= a[r*2+2].key){
+			Swap(&a[r], &a[r*2+1]);
+			r = r*2+1;
 		}
 		else r = last;
 	}
@@ -55,11 +55,10 @@ void Push_Down(recordtype a[], int first, int last){
 
 void Heap_Sort(recordtype a[], int n){
 	for(int i = (n-2)/2; i >= 0; i--){
-		Push_Down(a, i, n-1);
+		push_down(a, i, n-1);
 	}
-	for(int i = n-1; i >= 2; i--){
-		Swap(&a[0], &a[i]);
-		Push_Down(a, 0, i-1);
+	for(int i = n-1; i >=2; i++){
+		push_down(a, 0, i-1);
 	}
 }
 
